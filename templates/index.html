@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soil Prediction & Recommendation</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .container { max-width: 700px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px #ccc; }
+        h2, h3 { text-align: center; }
+        form { margin: 20px 0; }
+        label { display: block; margin-top: 10px; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; }
+        .result { background: #e7ffe7; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .metrics { background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 10px; }
+        .circle-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: #e0e7ff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px #b3b3b3;
+        }
+        .circle span {
+            position: absolute;
+            width: 80px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .ph { top: 10px; left: 85px; color: #4b0082; }
+        .n { top: 60px; left: 180px; color: #228B22; }
+        .p { top: 170px; left: 180px; color: #FFA500; }
+        .k { top: 210px; left: 85px; color: #8B0000; }
+        .organic_carbon { top: 170px; left: 10px; color: #654321; }
+        .texture { top: 60px; left: 10px; color: #4682B4; }
+        .moisture { top: 120px; left: 200px; color: #00CED1; }
+        .temperature { top: 120px; left: 0px; color: #FF4500; }
+        .stickers {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .sticker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #fffbe7;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            box-shadow: 0 0 5px #ccc;
+            padding: 10px;
+            font-size: 12px;
+        }
+        .sticker img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Soil Prediction & Recommendation System</h2>
+        <h3>Why Soil Prediction is Needed?</h3>
+        <p>
+            Accurate soil prediction helps farmers choose the right crops, optimize fertilizer use, and improve yield. It enables sustainable agriculture and reduces costs.
+        </p>
+        <h3>How Machine Learning Helps Agriculture?</h3>
+        <p>
+            ML models analyze soil data to predict soil types and recommend best practices, making agriculture smarter and more efficient.
+        </p>
+        <div class="circle-container">
+            <div class="circle">
+                <span class="ph">pH</span>
+                <span class="n">N</span>
+                <span class="p">P</span>
+                <span class="k">K</span>
+                <span class="organic_carbon">Organic<br>Carbon</span>
+                <span class="texture">Texture</span>
+                <span class="moisture">Moisture</span>
+                <span class="temperature">Temp</span>
+            </div>
+        </div>
+        <div class="stickers">
+            <div class="sticker">
+                <img src="https://img.icons8.com/color/48/000000/potato.png" alt="Potato">
+                Potato
+            </div>
+            <div class="sticker">
+                <img src="https://img.icons8.com/color/48/000000/wheat.png" alt="Wheat">
+                Wheat
+            </div>
+            <div class="sticker">
+                <img src="https://img.icons8.com/color/48/000000/corn.png" alt="Corn">
+                Corn
+            </div>
+            <div class="sticker">
+                <img src="https://img.icons8.com/color/48/000000/soybean.png" alt="Soybean">
+                Soybean
+            </div>
+        </div>
+        <form method="POST">
+            <label>pH:</label>
+            <input type="number" step="0.01" name="ph" required>
+            <label>Nitrogen (N):</label>
+            <input type="number" step="0.01" name="n" required>
+            <label>Phosphorus (P):</label>
+            <input type="number" step="0.01" name="p" required>
+            <label>Potassium (K):</label>
+            <input type="number" step="0.01" name="k" required>
+            <label>Organic Carbon (%):</label>
+            <input type="number" step="0.01" name="organic_carbon" required>
+            <label>Texture:</label>
+            <select name="texture" required>
+                <option value="sandy">Sandy</option>
+                <option value="loamy">Loamy</option>
+                <option value="clay">Clay</option>
+            </select>
+            <label>Moisture (%):</label>
+            <input type="number" step="0.01" name="moisture" required>
+            <label>Temperature (°C):</label>
+            <input type="number" step="0.01" name="temperature" required>
+            <button type="submit">Predict Soil Type</button>
+        </form>
+        {% if result %}
+        <div class="result">
+            <h3>Prediction Result</h3>
+            <p><strong>Soil Type:</strong> {{ result.soil_type }}</p>
+            <p><strong>Fertilizer Suggestion:</strong> {{ result.fertilizer }}</p>
+            <p><strong>Recommendation:</strong> {{ result.recommendation }}</p>
+        </div>
+        <div class="metrics">
+            <h4>Model Metrics</h4>
+            <p><strong>Accuracy:</strong> {{ result.accuracy }}</p>
+            <p><strong>Confusion Matrix:</strong> {{ result.confusion_matrix }}</p>
+            <p><strong>Classification Report:</strong> {{ result.classification_report }}</p>
+        </div>
+        <div class="conclusion">
+            <h4>Conclusion</h4>
+            <p>{{ result.conclusion }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
